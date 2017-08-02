@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper>
+	<!--  
+		result 表示这个sql返回结果，结果是List类型的集合。
+		集合中每个对象都由后面的全类名产生。
+		把sql查询出来的数据，根据映射关系{字段：属性}注入到这个全类名产生的对象中。
+		#{数据库的字段名：类的属性名}
+	-->
+	<select id="select_article_firstpage_list" result="List:com.wyh.jdbc.PersonasBean">
+		select userid,username,isgraduate,major,telephone,education from persons;
+		#{userid:userid,username:username,isgraduate:isgraduate,major:major,telephone:telephone,education:education}
+	</select>
+	
+	<insert id="insert_reader">
+		insert into readers(readername,age,sex,email,profession)values(?,?,?,?,?);
+	</insert>
+	
+	<insert id="save_book">
+		insert into tb_books(serialnum,name,price,bookCount,author,press)values(?,?,?,?,?,?);
+	</insert>
+	
+	<!-- id+":"+serialnum+":"+name+":"+price+":"+bookCount+":"+author+":"+press -->
+	<select id="select_all" result="List:com.wyh.bean.BookBean">
+		select * from tb_books;
+		#{id:id,serialnum:serialnum,name:name,price:price,bookCount:bookCount,author:author,press:press}
+	</select>
+	
+	<select id="select_byname" result="List:com.wyh.bean.BookBean">
+		select * from tb_books where name = ?;
+		#{id:id,serialnum:serialnum,name:name,price:price,bookCount:bookCount,author:author,press:press}
+	</select>
+	
+	<select id="select_byauthor" result="List:com.wyh.bean.BookBean">
+		select * from tb_books where author = ?;
+		#{id:id,serialnum:serialnum,name:name,price:price,bookCount:bookCount,author:author,press:press}
+	</select>
+	
+	
+	<select id="select_byid" result="List:com.wyh.bean.BookBean">
+		select * from tb_books where id = ?;
+		#{id:id,serialnum:serialnum,name:name,price:price,bookCount:bookCount,author:author,press:press}
+	</select>
+	
+	<select id="select_reader" result="List:com.wyh.bean.ReaderBean">
+		select * from readers;
+		#{id:id,readername:readername,age:age,sex:sex,email:email,profession:profession}
+	</select>
+	<select id="id_select_reader" result="List:com.wyh.bean.ReaderBean">
+		select * from readers where id = ?;
+		#{id:id,readername:readername,age:age,sex:sex,email:email,profession:profession}
+	</select>
+	<insert id="insert_sign">
+		insert into tbl_user(name,password)values(?,?);
+	</insert>
+	<select id="select_user" result="List:com.wyh.bean.UserBean">
+		select * from tbl_user where name= ? and password= ?;
+		#{name:name,password:password}
+	</select>
+	
+	<delete id="delete_list_id">
+		delete from readers where id=?;
+	</delete>
+	
+	<delete id="delete_book_id">
+		delete from tb_books where id=?;
+	</delete>
+	
+	<update id="update_reader">
+		update readers set readername=?,age=?,sex=?,email=?,profession= ? where id = ?;
+	</update>
+	
+	<update id="update_book">
+		update tb_books set serialnum=?,name=?,price=?,bookCount=?,author=?,press=? where id = ?;
+	</update>
+</mapper>
+
